@@ -1,21 +1,21 @@
 #logo {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  max-width: 150px;
-  height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 150px;
+    height: auto;
 }
 
 .logo-container {
-  text-align: center;
-  min-width: 270px;
+    text-align: center;
+    min-width: 270px;
 }
 
 .sidebar {
-  background-color: #37474f;
-  min-height: 800px;
-  min-width: 270px;
+    background-color: #37474f;
+    min-height: 800px;
+    min-width: 270px;
 }
 
 .icon {
-  padding: 1em;
+    padding: 1em;
 }

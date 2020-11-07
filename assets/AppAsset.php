@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'css/nav.css',
     ];
     public $js = [
+        'js/anyad.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -29,38 +29,48 @@ AppAsset::register($this);
   <div id="wrapper" class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar border-right" id="sidebar-wrapper">
         <li class="logo-container">
-          <img src="static/images/logo-woman.svg" alt="logo" id="logo" />
+            <?= Html::img('@web/images/logo-woman.svg', [
+                    "id"=>"logo"
+            ]) ?>
         </li>
         <li class="pl-3">
-          <a href="#">
-            <img class="icon" src="static/images/clipboard-data.svg" />Dashboard
+          <a href="#" id="dashboard-link">
+              <?= Html::img('@web/images/clipboard-data.svg', [
+                  "id"=>"logo"
+              ]) ?>
+              Dashboard
           </a>
         </li>
-        <li class="pl-3">
-          <a href="#">
-            <img class="icon" src="static/images/file-person.svg" />Customer
-            <span class="py-1 text-light">Profile</span>
+        <li class="pl-3" id="customer-profile">
+          <a href="#" class="text-danger" >
+              <?= Html::img('@web/images/file-person.svg') ?> Customer Profile
           </a>
         </li>
         <li class ="pl-3">
           <a href="#" class="py-1 text-light">
-            <img class="icon" src="static/images/default.svg" />Events
+              <?= Html::img('@web/images/default.svg', [
+                  "id"=>"logo"
+              ]) ?> Events
           </a>
         </li>
         <li class="pl-3">
           <a href="#" class="py-1 text-light">
-            <img class="icon" src="static/images/default.svg" />Profile
+              <?= Html::img('@web/images/default.svg', [
+                  "id"=>"logo"
+              ]) ?> Profile
           </a>
         </li>
         <li>
           <a href="#" class="py-1 text-light">
-            <img class="icon" src="static/images/default.svg" />Status
+              <?= Html::img('@web/images/default.svg', [
+                  "id"=>"logo"
+              ]) ?> Status
           </a>
         </li>
       </ul>
     </div>
   <!-- endof nav-sidebar -->
-    <div id="main-content-wrapper" class="pl-3">
+    <div id="main-content-wrapper" class="ml-3">
         <?= $content ?>
     </div>
 <?php $this->endBody() ?>
