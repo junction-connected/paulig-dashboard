@@ -18,8 +18,18 @@ class SiteController extends BaseController {
      */
     public function actionIndex() {
         $orderAmountByTimeOfWeekday = OrderAmountByTimeOfWeekday::find()->all();
+        $arrayData = [];
+
+        foreach ($orderAmountByTimeOfWeekday as $data) {
+            array_push($arrayData, [
+                'orderAmount' => $data->orderAmount,
+                'orderWeekDay' => $data->orderWeekDay,
+                'orderTime' => $data->orderTime
+            ]);
+        }
+
         return $this->render('index', [
-            'orderAmountByTimeOfWeekday' => $orderAmountByTimeOfWeekday
+            'orderAmountByTimeOfWeekday' => json_encode($arrayData)
         ]);
     }
 

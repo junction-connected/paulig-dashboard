@@ -9,6 +9,8 @@ $this->title = 'Amazing Business';
 
 <canvas id="myChart" width="400" height="400"></canvas>
 <script>
+    let anyad = <?= $orderAmountByTimeOfWeekday ?>;
+    console.log(anyad);
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
