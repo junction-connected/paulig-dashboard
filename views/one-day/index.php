@@ -1,5 +1,9 @@
 <?php
 
+/* @var $this yii\web\View */
+/* @var $orderAmountByFiveMinutes \app\models\OrderAmountByFiveMinutes */
+/* @var $orderItemByDate \app\models\OrderItemByDate */
+
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -29,127 +33,162 @@ $form = ActiveForm::begin([
 <?php ActiveForm::end(); ?>
 
 <?php
-    if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
-        //var_dump($avgOrderAmountByWeekdayFiveMinutes);
-        echo '<br><br><br>';
-        var_dump($orderAmountByFiveMinutes);
-        echo '<br><br><br>';
-        var_dump($orderItemByDate);
-    }
+if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
 ?>
 
-<canvas id="canvas" width="700" height="400"></canvas>
-<script>
-    var ctx = $("#canvas");
-    var numsamples = 60;
-    var AvgCpuChartOptions = {
-        showLines: true,
-        animation: {
-            duration: 1000,
-            easing: 'linear'
-        },
-        responsive: true,
-        title: {
-            display: true,
-            text: 'Average CPU Usage (%)',
-            padding: 5
-        },
-        legend: {
-            display: false,
-            position: 'top',
-            labels: {
-                boxWidth: 10,
-                padding: 2
-            }
-        },
-        tooltips: {
-            enabled: false
-        },
-        scales: {
-            yAxes: [{
-                id: 'cpu',
-                position: 'left',
-                gridLines: {
-                    drawTicks: false
-                },
-                ticks: {
-                    fontSize: 10,
-                    max: 100,
-                    min: 0,
-                    stepSize: 25,
-                    callback: function(value) {
-                        return value + '%';
-                    }
-                }
-            }],
-            xAxes: [{
-                scaleLabel: {
-                    display: true,
-                    fontSize: 11,
-                    labelString: 'Time'
-                },
-                gridLines: {
-                    display: true,
-                    drawTicks: false
-                },
-                ticks: {
-                    fontSize: 10,
-                    maxRotation: 0,
-                    autoSkip: false,
-                    callback: function(value) {
-                        return value.toString().length > value ? 0 : null;
-                    },
-                }
-            }]
-        }
-    };
-    var AvgCpuChartData = {
-        labels: [],
-        datasets: [{
-            label: '',
-            yAxisID: 'cpu',
-            fill: false,
-            lineTension: 0.2,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderWidth: 1,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 0,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 0,
-            pointRadius: 0,
-            pointHitRadius: 10,
-            data: [],
-        }]
-    };
-    for (var i = 0; i < numsamples; i++) {
-        AvgCpuChartData.labels.push('');
-        AvgCpuChartData.datasets[0].data.push(null);
-    }
-    var AvgCpuChart = new Chart(ctx, {
-        type: 'line',
-        data: AvgCpuChartData,
-        options: AvgCpuChartOptions
-    });
+<p id="datecucc" style="font-size: 3em"></p>
+<h1 id="revenue_counter"></h1>
+<canvas id="chart0" style="width:512px;height:320px"></canvas>
 
-    setInterval(function randomdata() {
-        AvgCpuChartData.datasets[0].data.shift();
-        AvgCpuChartData.labels.shift();
-        var ts = new Date().getTime();
-        var csecs = moment(ts).format('s');
-        var label = '';
-        if (csecs % 15 === 0) {
-            label = csecs === '0' ? moment(ts).format('HH:mm') : moment(ts).format(':ss');
+<script>
+
+    var fiveMinOrderDataRaw = <?= $orderAmountByFiveMinutes ?>;
+    fiveMinOrderDataRaw.map(x => x["orderTime"] = new Date("1970-01-01 " + x["orderTime"].split(" ")[1]))
+    let  fiveMinOrderData = [];
+    fiveMinOrderData.push(fiveMinOrderDataRaw[0])
+    for (let i = 1; i < fiveMinOrderDataRaw.length; i++) {
+        while (fiveMinOrderDataRaw[i]["orderTime"] - fiveMinOrderData[fiveMinOrderData.length - 1]["orderTime"] > 5 * 60 * 1000) {
+            oldDate = fiveMinOrderData[fiveMinOrderData.length - 1]["orderTime"];
+
+            fiveMinOrderData.push({
+                "orderTime": new Date(1970, 0, 1, oldDate.getHours(), oldDate.getMinutes() + 5, 0),
+                "orderAmount": 0
+            });
         }
-        AvgCpuChartData.datasets[0].data.push(Math.floor(Math.random()*100));
-        AvgCpuChartData.labels.push(label);
-        AvgCpuChart.update();
-    }, 1000);
+        fiveMinOrderData.push(fiveMinOrderDataRaw[i]);
+    }
+
+    console.log(fiveMinOrderData);
+
+    var orderData = <?= $orderItemByDate ?>;
+
+    orderData.map(x => x["order_time"] = new Date("1970-01-01 " + x["order_time"].split(" ")[1]))
+    currentFiveMinOrderData = 0;
+    currentOrderData = 0;
+
+    revenueAmount = 0;
+
+    var samples = 40;
+    var speed = 100;
+    let timeout = samples * speed;
+    var values = [];
+    var labels = [];
+    var charts = [];
+    var value = 0;
+    var scale = 1;
+
+    var currentDate = new Date(1970,0,1,7,0,0);
+    var dateDiff = 60352;
+
+    addEmptyValues(values, samples);
+
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (revenueAmount - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    var originalCalculateXLabelRotation = Chart.Scale.prototype.calculateXLabelRotation
+
+    function setTimeField(time) {
+        $("#datecucc").html(("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2));
+    }
+
+    function initialize() {
+
+        charts.push(new Chart(document.getElementById("chart0"), {
+            type: 'line',
+            data: {
+                //labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 2,
+                    lineTension: 0.25,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                animation: {
+                    duration: speed * 1.5,
+                    easing: 'linear'
+                },
+                legend: false,
+                scales: {
+                    xAxes: [{
+                        type: "time",
+                        display: false
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0
+                        }
+                    }]
+                }
+            }
+        }));
+    }
+
+    function addEmptyValues(arr, n) {
+        for(var i = 0; i < n; i++) {
+            currentDate.setTime(currentDate.getTime() + dateDiff);
+            arr.push({
+                x: currentDate,
+                y: null
+            });
+        }
+    }
+
+    function updateCharts(){
+        charts.forEach(function(chart) {
+            chart.update();
+        });
+    }
+
+    function progress() {
+
+        while (currentDate - fiveMinOrderData[currentFiveMinOrderData]["orderTime"] > 0) {
+            values.push({
+                x: fiveMinOrderData[currentFiveMinOrderData]["orderTime"],
+                y: fiveMinOrderData[currentFiveMinOrderData]["orderAmount"]
+            });
+            values.shift();
+            currentFiveMinOrderData++;
+        }
+    }
+
+    function advance() {
+        if (values[0] !== null && scale < 4) {
+            //rescale();
+            updateCharts();
+        }
+        currentDate.setTime(currentDate.getTime() + dateDiff);
+        animateValue(document.getElementById("revenue_counter"), revenueAmount, fiveMinOrderData[currentFiveMinOrderData]["orderAmount"], 300);
+        while (currentDate - orderData[currentOrderData]["order_time"] > 0) {
+            revenueAmount += Number(orderData[currentOrderData]["price"]);
+            currentOrderData++;
+        }
+        setTimeField(currentDate);
+        progress();
+        updateCharts();
+
+        setTimeout(function() {
+            requestAnimationFrame(advance);
+        }, speed);
+    }
+
+    initialize();
+    advance();
+
 </script>
+
+<?php } ?>
