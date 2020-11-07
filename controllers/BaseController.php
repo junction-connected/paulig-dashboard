@@ -12,6 +12,20 @@ use yii\filters\VerbFilter;
  */
 class BaseController extends Controller {
     /**
+     * @param $data
+     * @param bool $successful
+     * @return string
+     */
+    public function ajaxOutput($data, $successful = true) {
+        return $this->renderPartial('../partials/ajax', [
+            'result' => json_encode([
+                'success' => $successful ? 'true' : 'false',
+                'data' => $data
+            ])
+        ]);
+    }
+
+    /**
      * @return array
      */
     public function behaviors() {
