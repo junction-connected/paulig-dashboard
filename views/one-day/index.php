@@ -1,1 +1,3 @@
-<h1>Hellóka One Day</h1>
+<?php
+
+/* @var $avgOrderAmountByWeekdayFiveMinutes \app\models\AvgOrderAmountByWeekdayFiveMinutes */
