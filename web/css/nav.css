@@ -19,3 +19,16 @@
 .icon {
     padding: 1em;
 }
+
+#main-content-wrapper{
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.flex-container{
+    display: flex;
+}
+
+.href-link{
+    color: #ffffff;
+}
