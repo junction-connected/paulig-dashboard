@@ -1,24 +1,42 @@
 <?php
 
 use kartik\date\DatePicker;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
-var_dump($orderAmountByFiveMinutes);
+$form = ActiveForm::begin([
+    'id' => 'one-day-form' ,
+    'validateOnBlur'=>false,
+    'validateOnChange'=>false,
+]);
 
 ?>
 
-<h1>Hellóka One Day</h1>
-
-<?= DatePicker::widget([
-    'id' => 'one-day-date',
-    'name' => 'select-date',
-    'type' => DatePicker::TYPE_INPUT,
+<?= $form->field($datePickForm, 'date')->widget(DatePicker::className(), [
+    'options' => [
+        'placeholder' => 'Choose date ...'
+    ],
     'pluginOptions' => [
         'autoclose' => true,
         'format' => 'yyyy-mm-dd'
     ]
 ]) ?>
 
-<button type="submit" onclick="oneDay.postDate()">Gec</button>
+<div class="form-group">
+    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+</div>
+
+<?php ActiveForm::end(); ?>
+
+<?php
+    if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
+        //var_dump($avgOrderAmountByWeekdayFiveMinutes);
+        echo '<br><br><br>';
+        var_dump($orderAmountByFiveMinutes);
+        echo '<br><br><br>';
+        var_dump($orderItemByDate);
+    }
+?>
 
 <canvas id="canvas" width="700" height="400"></canvas>
 <script>

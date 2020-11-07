@@ -6,6 +6,7 @@ use Yii;
 use app\models\AvgOrderAmountByWeekdayFiveMinutes;
 use app\models\OrderAmountByFiveMinutes;
 use app\models\OrderItemByDate;
+use app\models\DatePickForm;
 
 /**
  * Class OneDayController
@@ -16,8 +17,26 @@ class OneDayController extends BaseController {
      * @return string
      */
     public function actionIndex() {
-        $post = Yii::$app->request->post();
+        $datePickForm = new DatePickForm();
 
+        if ($datePickForm->load(Yii::$app->request->post())) {
+            return $this->render('index', [
+                'avgOrderAmountByWeekdayFiveMinutes' => $this->getAvgOrderAmountByWeekdayFiveMinutes(),
+                'orderAmountByFiveMinutes' => $this->filterOrderAmount($datePickForm),
+                'orderItemByDate' => $this->filterOrderItem($datePickForm),
+                'datePickForm' => $datePickForm
+            ]);
+        }
+
+        return $this->render('index', [
+            'datePickForm' => $datePickForm
+        ]);
+    }
+
+    /**
+     * @return false|string
+     */
+    private function getAvgOrderAmountByWeekdayFiveMinutes() {
         $avgOrderAmountByWeekdayFiveMinutes = AvgOrderAmountByWeekdayFiveMinutes::find()->all();
         $arrayData = [];
 
@@ -30,30 +49,18 @@ class OneDayController extends BaseController {
             ]);
         }
 
-        if (isset($post['orderTime'])) {
-            return $this->render('index', [
-                'avgOrderAmountByWeekdayFiveMinutes' => json_encode($arrayData),
-                'orderAmountByFiveMinutes' => $this->filterOrderAmount($post),
-                'orderItemByDate' => $this->filterOrderItem($post)
-            ]);
-        }
-
-        return $this->render('index', [
-            'avgOrderAmountByWeekdayFiveMinutes' => json_encode($arrayData),
-            'orderAmountByFiveMinutes' => null,
-            'orderItemByDate' => null
-        ]);
+        return json_encode($arrayData);
     }
 
     /**
      * @param $postData
      * @return false|string
      */
-    public function filterOrderAmount($postData) {
+    private function filterOrderAmount($postData) {
         $orderAmountArray = [];
 
         $orderAmountByFiveMinutes = OrderAmountByFiveMinutes::find()->where([
-            'between', 'orderTime', $postData['orderTime'] . ' 00:00:00', $postData['orderTime'] . ' 23:59:59'
+            'between', 'orderTime', $postData->date . ' 00:00:00', $postData->date . ' 23:59:59'
         ])->all();
 
         foreach ($orderAmountByFiveMinutes as $data) {
@@ -70,11 +77,11 @@ class OneDayController extends BaseController {
      * @param $postData
      * @return false|string
      */
-    public function filterOrderItem($postData) {
+    private function filterOrderItem($postData) {
         $orderItemArray = [];
 
         $orderItemByDate = OrderItemByDate::find()->where([
-            'between', 'order_time', $postData['orderTime'] . ' 00:00:00', $postData['orderTime'] . ' 23:59:59'
+            'between', 'order_time', $postData['date'] . ' 00:00:00', $postData['date'] . ' 23:59:59'
         ])->all();
 
         foreach ($orderItemByDate as $data) {
@@ -87,44 +94,5 @@ class OneDayController extends BaseController {
         }
 
         return json_encode($orderItemArray);
-    }
-
-    /**
-     * @return string
-     */
-    public function actionFilter() {
-        //$post = Yii::$app->request->post();
-        $post['orderTime'] = '2020-07-22';
-        $orderAmountArray = [];
-        $orderItemArray = [];
-
-        $orderAmountByFiveMinutes = OrderAmountByFiveMinutes::find()->where([
-            'between', 'orderTime', $post['orderTime'] . ' 00:00:00', $post['orderTime'] . ' 23:59:59'
-        ])->all();
-
-        foreach ($orderAmountByFiveMinutes as $data) {
-            array_push($orderAmountArray, [
-                'orderAmount' => $data->orderAmount,
-                'orderTime' => $data->orderAmount
-            ]);
-        }
-
-        $orderItemByDate = OrderItemByDate::find()->where([
-            'between', 'order_time', $post['orderTime'] . ' 00:00:00', $post['orderTime'] . ' 23:59:59'
-        ])->all();
-
-        foreach ($orderItemByDate as $data) {
-            array_push($orderItemArray, [
-                'order_time' => $data->order_time,
-                'id' => $data->id,
-                'name' => $data->name,
-                'price' => $data->price
-            ]);
-        }
-
-        return $this->render('index', [
-            'orderAmountByFiveMinutes' => json_encode($orderAmountArray),
-            'orderItemByDate' => json_encode($orderItemArray)
-        ]);
     }
 }

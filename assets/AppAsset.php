@@ -14,6 +14,7 @@ class AppAsset extends AssetBundle {
     public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 
     public $css = [
+        'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap',
         'css/site.css',
         'css/nav.css',
         'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css',
