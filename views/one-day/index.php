@@ -177,7 +177,6 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
         while (currentDate - orderData[currentOrderData]["order_time"] > 0) {
             revenueAmount += Number(orderData[currentOrderData]["price"]);
 
-            console.log(orderData[currentOrderData]["name"]);
             if(orderData[currentOrderData]["id"] !== 1){
                 addElement(orderData[currentOrderData]["name"], orderData[currentOrderData]["price"], Date(currentDate - orderData[currentOrderData]["order_time"]).toString(), orderData[currentOrderData]["id"]);
             }
@@ -197,27 +196,12 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
 
     function addElement(elem,price, time, id)
     {
-        /*
-        hrDate = $('#datepickform-date').val(); // yyyy-mm-dd
-        hrTime = $('#datecucc').text(); // hh:mm
-
-        date = new Date(hrDate + " " + hrTime);
-        console.log(date);
-        */
         $("#noticontainer").prepend(" <div id=\"notipanel"+ id +"\" class=\"panel panel-default\"><div class=\"panel-body\"></div></div>");
         $("#notipanel"+id + " .panel-body").html('&#128184; ' +  elem + '<div style="float:right;">€'+ price +'</div>');
         $("#notipanel"+id).delay(2000).fadeOut(300);
 
 
     }
-    console.log(fiveMinOrderData);
-    console.log(orderData);
-    console.log(orderData[0].order_time);
-    console.log(orderData[0].order_time.toString());
-
-
-
-
 
     //let timer = setInterval(addElement,300);
     /*setTimeout(function(){
