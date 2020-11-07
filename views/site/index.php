@@ -5,8 +5,8 @@
 
 $this->title = 'Amazing Business';
 ?>
-
-<canvas id="myChart" width="900" height="400"></canvas>
+<h1>Order count per day</h1>
+<canvas id="myChart" style="width:100vw; max-width: 100%" height="400"></canvas>
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -149,8 +149,8 @@ $this->title = 'Amazing Business';
         options: {
             responsive:true,
             title: {
-                display: true,
-                text: 'World population per region (in millions)'
+                display: false,
+                text: '<h1>Order Count per day </h1>'
             }
         }
     });
