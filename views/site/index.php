@@ -1,8 +1,10 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $orderAmountByTimeOfWeekday \app\models\OrderAmountByTimeOfWeekday */
 
 $this->title = 'Amazing Business';
+
 ?>
 
 <canvas id="myChart" width="400" height="400"></canvas>

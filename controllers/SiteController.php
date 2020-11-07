@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Response;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\OrderAmountByTimeOfWeekday;
 
 /**
  * Class SiteController
@@ -16,7 +17,10 @@ class SiteController extends BaseController {
      * @return string
      */
     public function actionIndex() {
-        return $this->render('index');
+        $orderAmountByTimeOfWeekday = OrderAmountByTimeOfWeekday::find()->all();
+        return $this->render('index', [
+            'orderAmountByTimeOfWeekday' => $orderAmountByTimeOfWeekday
+        ]);
     }
 
     /**
