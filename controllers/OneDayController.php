@@ -66,7 +66,7 @@ class OneDayController extends BaseController {
         foreach ($orderAmountByFiveMinutes as $data) {
             array_push($orderAmountArray, [
                 'orderAmount' => $data->orderAmount,
-                'orderTime' => $data->orderAmount
+                'orderTime' => $data->orderTime
             ]);
         }
 
