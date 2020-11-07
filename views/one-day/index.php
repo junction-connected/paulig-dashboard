@@ -38,20 +38,6 @@ $form = ActiveForm::begin([
     }
 ?>
 
-?>
-
-<h1>Hellóka One Day</h1>
-
-    <?= DatePicker::widget([
-        'id' => 'one-day-date',
-        'name' => 'select-date',
-        'type' => DatePicker::TYPE_INPUT,
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-mm-dd'
-        ]
-    ]) ?>
-<button type="submit" class="btn btn-primary" onclick="oneDay.postDate()">Gec</button>
 <canvas id="canvas" width="700" height="400"></canvas>
 
 <div id="noticontainer">
