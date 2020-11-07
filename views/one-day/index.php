@@ -38,7 +38,26 @@ $form = ActiveForm::begin([
     }
 ?>
 
+?>
+
+<h1>Hellóka One Day</h1>
+
+    <?= DatePicker::widget([
+        'id' => 'one-day-date',
+        'name' => 'select-date',
+        'type' => DatePicker::TYPE_INPUT,
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-mm-dd'
+        ]
+    ]) ?>
+<button type="submit" class="btn btn-primary" onclick="oneDay.postDate()">Gec</button>
 <canvas id="canvas" width="700" height="400"></canvas>
+
+<div id="noticontainer">
+    <div id="notipanel" class="panel panel-default"><div class="panel-body">' value itemname'</div></div>
+</div>
+
 <script>
     var ctx = $("#canvas");
     var numsamples = 60;
@@ -152,4 +171,31 @@ $form = ActiveForm::begin([
         AvgCpuChartData.labels.push(label);
         AvgCpuChart.update();
     }, 1000);
+
+    let notifications_queue=[
+        {text: "Hey, you just sold a latte", value: "5.23"},
+        {text: "One more espresso sold", value: "2.11"}
+    ];
+
+    let d = [
+        "asd", "dsa","sda"
+    ];
+
+    count=0;
+    function addElement(elem, delay)
+    {
+        $("#noticontainer").prepend(" <div id=\"notipanel\" class=\"panel panel-default\"><div class=\"panel-body\"> value itemname </div></div>");
+        $("#notipanel").append(count);
+        count++;
+    }
+
+    let timer = setInterval(addElement,2000);
+    setTimeout(function(){
+        clearInterval(timer);
+    }, 14000);
+
+
+
+
+
 </script>
