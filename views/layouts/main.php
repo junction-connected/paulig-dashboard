@@ -59,6 +59,9 @@ AppAsset::register($this);
             <?= $content ?>
         </div>
     </div>
+
+<script>rootPath = '<?= Yii::$app->getUrlManager()->getBaseUrl() ?>';</script>
+
 <?php $this->endBody() ?>
 </body>
 </html>
