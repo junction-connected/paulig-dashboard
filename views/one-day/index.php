@@ -40,7 +40,10 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
 <h1 id="revenue_counter"></h1>
 <canvas id="chart0" style="width:512px;height:320px"></canvas>
 
-<script>
+    <div id="noticontainer">
+    </div>
+
+    <script>
 
     var fiveMinOrderDataRaw = <?= $orderAmountByFiveMinutes ?>;
     fiveMinOrderDataRaw.map(x => x["orderTime"] = new Date("1970-01-01 " + x["orderTime"].split(" ")[1]))
@@ -57,8 +60,6 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
         }
         fiveMinOrderData.push(fiveMinOrderDataRaw[i]);
     }
-
-    console.log(fiveMinOrderData);
 
     var orderData = <?= $orderItemByDate ?>;
 
@@ -175,6 +176,11 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
         animateValue(document.getElementById("revenue_counter"), revenueAmount, fiveMinOrderData[currentFiveMinOrderData]["orderAmount"], 300);
         while (currentDate - orderData[currentOrderData]["order_time"] > 0) {
             revenueAmount += Number(orderData[currentOrderData]["price"]);
+
+            console.log(orderData[currentOrderData]["name"]);
+            if(orderData[currentOrderData]["id"] !== 1){
+                addElement(orderData[currentOrderData]["name"], orderData[currentOrderData]["price"], Date(currentDate - orderData[currentOrderData]["order_time"]).toString(), orderData[currentOrderData]["id"]);
+            }
             currentOrderData++;
         }
         setTimeField(currentDate);
@@ -188,6 +194,35 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
 
     initialize();
     advance();
+
+    function addElement(elem,price, time, id)
+    {
+        /*
+        hrDate = $('#datepickform-date').val(); // yyyy-mm-dd
+        hrTime = $('#datecucc').text(); // hh:mm
+
+        date = new Date(hrDate + " " + hrTime);
+        console.log(date);
+        */
+        $("#noticontainer").prepend(" <div id=\"notipanel"+ id +"\" class=\"panel panel-default\"><div class=\"panel-body\"></div></div>");
+        $("#notipanel"+id + " .panel-body").html('&#128184; ' +  elem + '<div style="float:right;">€'+ price +'</div>');
+        $("#notipanel"+id).delay(2000).fadeOut(300);
+
+
+    }
+    console.log(fiveMinOrderData);
+    console.log(orderData);
+    console.log(orderData[0].order_time);
+    console.log(orderData[0].order_time.toString());
+
+
+
+
+
+    //let timer = setInterval(addElement,300);
+    /*setTimeout(function(){
+        clearInterval(timer);
+    }, 14000);*/
 </script>
 
 <?php } ?>
