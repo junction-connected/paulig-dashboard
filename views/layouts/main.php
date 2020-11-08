@@ -50,13 +50,6 @@ AppAsset::register($this);
                         <p>Flashback</p>
                     </a>
                 </li>
-                <hr class="separator">
-                <li class="pl-3">
-                    <a class="href-link" href="<?= Yii::$app->urlManager->createUrl(['basket/index']) ?>" class="py-1 text-light">
-                        <?= Html::img('@web/images/basket.svg') ?>
-                        <p>Basket Analysis</p>
-                    </a>
-                </li>
             </ul>
         </div>
         <!-- endof nav-sidebar -->

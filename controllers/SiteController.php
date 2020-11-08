@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\BasketAnalysis;
+use DateTime;
 use Yii;
 use yii\web\Response;
 use app\models\LoginForm;
@@ -18,18 +20,72 @@ class SiteController extends BaseController {
      */
     public function actionIndex() {
         $orderAmountByTimeOfWeekday = OrderAmountByTimeOfWeekday::find()->all();
-        $arrayData = [];
+        $orderAmountData = [];
 
         foreach ($orderAmountByTimeOfWeekday as $data) {
-            array_push($arrayData, [
+            array_push($orderAmountData, [
                 'orderAmount' => $data->orderAmount,
                 'orderWeekDay' => $data->orderWeekDay,
                 'orderTime' => $data->orderTime
             ]);
         }
 
+        $basketAnalysis = BasketAnalysis::find()->all();
+        $arrayData = [];
+
+        foreach ($basketAnalysis as $data) {
+            if (!array_key_exists($data->orderWeekDay, $arrayData)) {
+                $arrayData[$data->orderWeekDay] = [];
+            }
+            array_push($arrayData[$data->orderWeekDay], [
+                'avgAmount' => (float) $data->avg_amount,
+                'avgRevenue' => (float) $data->avg_revenue,
+                'orderTime' => DateTime::createFromFormat('H:i:s', $data->orderTime)
+            ]);
+        }
+
+        $peakTimes = [];
+
+        $maxIdx = 0;
+        foreach ($arrayData as $k => $times) {
+            foreach ($times as $idx => $time) {
+                if ($time['avgAmount'] > $times[$maxIdx]['avgAmount']) {
+                    $maxIdx = $idx;
+                }
+            }
+            $startIdx = $maxIdx;
+            $endIdx = $maxIdx;
+            while ($startIdx > 0) {
+                if ($times[$startIdx]['orderTime']->diff($times[$startIdx - 1]['orderTime'])->i > 10) {
+                    break;
+                }
+                if ($times[$startIdx - 1]['avgAmount'] / $times[$maxIdx]['avgAmount'] < 0.5) {
+                    break;
+                }
+                $startIdx--;
+            }
+            while ($endIdx < sizeof($times) - 1) {
+                if ($times[$endIdx]['orderTime']->diff($times[$endIdx + 1]['orderTime'])->i > 10 ) {
+                    break;
+                }
+                if ($times[$endIdx + 1]['avgAmount'] / $times[$maxIdx]['avgAmount'] < 0.5) {
+                    break;
+                }
+                $endIdx++;
+            }
+
+            $dow = (int)((new DateTime())->format("w"));
+
+            $peakTimes[$k] = [
+                "startTime" => $times[$startIdx]['orderTime']->format("H:m"),
+                "endTime" => $times[$endIdx]['orderTime']->format("H:m")
+            ];
+            $maxIdx = 0;
+        }
+
         return $this->render('index', [
-            'orderAmountByTimeOfWeekday' => json_encode($arrayData)
+            'orderAmountByTimeOfWeekday' => json_encode($orderAmountData),
+            'peakTime' => $peakTimes[$dow]['startTime'] . " - " . $peakTimes[$dow]['endTime']
         ]);
     }
 

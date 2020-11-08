@@ -9,29 +9,33 @@ $this->title = 'Amazing Business';
 <div class="row">
     <div class="col-sm-12">
         <div class="row">
+            <h1 class="highlight">Today</h1>
+        </div>
+        <div class="row">
             <div class="col-sm-4">
                 <div class="panel-box red">
-                    <h1 class="colored">Customer</h1>
-                    <h2 class="colored">5.236</h2>
+                    <h1 class="colored">Peak Time</h1>
+                    <h2 class="colored"><?= $peakTime ?></h2>
                     <span class="glyphicon glyphicon-user icon-colored-box-position"></span>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="panel-box blue">
-                    <h1 class="colored">Product</h1>
+                    <h1 class="colored">Items Sold</h1>
                     <h2 class="colored">1.732</h2>
                     <span class="glyphicon glyphicon-list-alt icon-colored-box-position"></span>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="panel-box green">
-                    <h1 class="colored">Order</h1>
-                    <h2 class="colored">14.522</h2>
+                    <h1 class="colored">Revenue</h1>
+                    <h2 class="colored">€14.522</h2>
                     <span class="glyphicon glyphicon-shopping-cart icon-colored-box-position"></span>
                 </div>
             </div>
         </div>
     </div>
+    <hr class="separator"></hr>
     <div class="col-sm-12">
         <div class="panel-box white">
             <h1>Order count per day</h1>
