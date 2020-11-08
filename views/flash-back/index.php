@@ -70,14 +70,17 @@ $this->title = 'Flashback';
 
     <div class="col-sm-8">
         <div class="panel-box white">
-            <span class="glyphicon glyphicon-time" style="font-size: 2.7em;"></span>
-            <p id="datecucc" style="font-size: 3em;display: inline-block;margin-left: 15px;"></p>
-            <br>
-            <span class="glyphicon glyphicon-euro" style="font-size: 2.7em;"></span>
-            <p id="revenue_counter" style="font-size: 3em;display: inline-block;margin-left: 15px;"></p>
-            <br>
-            <br>
-            <canvas id="chart0" style="width:100vw; max-width: 100%; height: 580px"></canvas>
+            <div style="position: absolute; top: 40px; left: 40px">
+                <span class="glyphicon glyphicon-time" style="font-size: 2.7em;"></span>
+                <p id="datecucc" style="font-size: 3em;display: inline-block;margin-left: 15px;"></p>
+            </div>
+
+            <div style="position: absolute; top: 40px; right: 40px">
+                <span class="glyphicon glyphicon-euro" style="font-size: 2.7em;"></span>
+                <p id="revenue_counter" style="font-size: 3em;display: inline-block;margin-left: 15px;"></p>
+            </div>
+
+            <canvas id="chart0" style="width:100vw; max-width: 100%; height: 580px; margin-top: 100px"></canvas>
         </div>
     </div>
 </div>
