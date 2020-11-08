@@ -68,6 +68,9 @@ $this->title = 'Flashback';
                     <p>
                         Straight ahead! Pick a date above, and travel back in time! &#x1f60e;
                     </p>
+                    <p style="font-weight: bold;">
+                        Please note that the dump may not have data for the selected date. A general range we would recommend is from about 20th August to 23rd September.
+                    </p>
                 </div>
             </div>
             <?php if (isset($avgOrderAmountByWeekdayFiveMinutes)) : ?>
