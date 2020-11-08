@@ -1,51 +1,89 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $orderAmountByFiveMinutes \app\models\OrderAmountByFiveMinutes */
-/* @var $orderItemByDate \app\models\OrderItemByDate */
-
-use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 
-$form = ActiveForm::begin([
-    'id' => 'one-day-form' ,
-    'validateOnBlur'=>false,
-    'validateOnChange'=>false,
-]);
+/* @var $this yii\web\View */
+/* @var $avgOrderAmountByWeekdayFiveMinutes \app\models\AvgOrderAmountByWeekdayFiveMinutes */
+/* @var $orderAmountByFiveMinutes \app\models\OrderAmountByFiveMinutes */
+/* @var $orderItemByDate \app\models\OrderItemByDate */
+/* @var $datePickForm \app\models\DatePickForm */
+
+$this->title = 'Flashback';
 
 ?>
 
-<?= $form->field($datePickForm, 'date')->widget(DatePicker::className(), [
-    'options' => [
-        'placeholder' => 'Choose date ...'
-    ],
-    'pluginOptions' => [
-        'autoclose' => true,
-        'format' => 'yyyy-mm-dd'
-    ]
-]) ?>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel-box white">
+            <?php $form = ActiveForm::begin([
+                'id' => 'flash-back-form' ,
+                'validateOnBlur' => false,
+                'validateOnChange' => false,
+            ]); ?>
 
-<div class="form-group">
-    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
-</div>
+            <div class="row">
+                <div class="col-sm-9">
+                    <?= $form->field($datePickForm, 'date')->widget(DatePicker::className(), [
+                        'options' => [
+                            'placeholder' => 'Choose date ...',
+                            'class' => 'input-lg',
+                            'style' => 'width:100%'
+                        ],
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd'
+                        ]
+                    ])->label(false) ?>
+                </div>
 
-<?php ActiveForm::end(); ?>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <?= Html::submitButton('Submit', [
+                            'class' => 'btn btn-primary btn-lg'
+                        ]) ?>
+                    </div>
+                </div>
+            </div>
 
-<?php
-if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
-?>
+            <?php ActiveForm::end(); ?>
 
-<p id="datecucc" style="font-size: 3em"></p>
-<h1 id="revenue_counter"></h1>
-<canvas id="chart0" style="width:512px;height:320px"></canvas>
+            <hr>
 
-    <div id="noticontainer">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Info</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Lorem ipsum dolor sit amet, illum decore mnesarchum cu eum, te justo electram eos, comprehensam delicatissimi cu ius. Eos ancillae deleniti officiis id. Ius et sapientem appellantur, ei vel augue contentiones. Duo mundi prompta minimum ex, ne vix convenire laboramus. Eum repudiare adversarium signiferumque ea, cu lorem assum vocent sed, id lorem delicata hendrerit vim.</p>
+                </div>
+            </div>
+            <?php if (isset($avgOrderAmountByWeekdayFiveMinutes)) : ?>
+            <h1>Orders</h1>
+            <div id="noticontainer"></div>
+            <?php endif ?>
+        </div>
     </div>
 
-    <script>
+    <?php if (isset($avgOrderAmountByWeekdayFiveMinutes)) : ?>
 
-    var fiveMinOrderDataRaw = <?= $orderAmountByFiveMinutes ?>;
+    <div class="col-sm-8">
+        <div class="panel-box white">
+            <span class="glyphicon glyphicon-time" style="font-size: 2.7em;"></span>
+            <p id="datecucc" style="font-size: 3em;display: inline-block;margin-left: 15px;"></p>
+            <br>
+            <span class="glyphicon glyphicon-euro" style="font-size: 2.7em;"></span>
+            <p id="revenue_counter" style="font-size: 3em;display: inline-block;margin-left: 15px;"></p>
+            <br>
+            <br>
+            <canvas id="chart0" style="width:100vw; max-width: 100%; height: 580px"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    let fiveMinOrderDataRaw = <?= $orderAmountByFiveMinutes ?>;
     fiveMinOrderDataRaw.map(x => x["orderTime"] = new Date("1970-01-01 " + x["orderTime"].split(" ")[1]))
     let  fiveMinOrderData = [];
     fiveMinOrderData.push(fiveMinOrderDataRaw[0])
@@ -61,7 +99,7 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
         fiveMinOrderData.push(fiveMinOrderDataRaw[i]);
     }
 
-    var orderData = <?= $orderItemByDate ?>;
+    let orderData = <?= $orderItemByDate ?>;
 
     orderData.map(x => x["order_time"] = new Date("1970-01-01 " + x["order_time"].split(" ")[1]))
     currentFiveMinOrderData = 0;
@@ -69,17 +107,17 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
 
     revenueAmount = 0;
 
-    var samples = 40;
-    var speed = 100;
+    let samples = 40;
+    let speed = 100;
     let timeout = samples * speed;
-    var values = [];
-    var labels = [];
-    var charts = [];
-    var value = 0;
-    var scale = 1;
+    let values = [];
+    let labels = [];
+    let charts = [];
+    let value = 0;
+    let scale = 1;
 
-    var currentDate = new Date(1970,0,1,7,0,0);
-    var dateDiff = 60352;
+    let currentDate = new Date(1970,0,1,7,0,0);
+    let dateDiff = 60352;
 
     addEmptyValues(values, samples);
 
@@ -96,7 +134,7 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
         window.requestAnimationFrame(step);
     }
 
-    var originalCalculateXLabelRotation = Chart.Scale.prototype.calculateXLabelRotation
+    let originalCalculateXLabelRotation = Chart.Scale.prototype.calculateXLabelRotation
 
     function setTimeField(time) {
         $("#datecucc").html(("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2));
@@ -140,7 +178,7 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
     }
 
     function addEmptyValues(arr, n) {
-        for(var i = 0; i < n; i++) {
+        for(let i = 0; i < n; i++) {
             currentDate.setTime(currentDate.getTime() + dateDiff);
             arr.push({
                 x: currentDate,
@@ -156,7 +194,6 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
     }
 
     function progress() {
-
         while (currentDate - fiveMinOrderData[currentFiveMinOrderData]["orderTime"] > 0) {
             values.push({
                 x: fiveMinOrderData[currentFiveMinOrderData]["orderTime"],
@@ -169,7 +206,6 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
 
     function advance() {
         if (values[0] !== null && scale < 4) {
-            //rescale();
             updateCharts();
         }
         currentDate.setTime(currentDate.getTime() + dateDiff);
@@ -190,15 +226,24 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
         }, speed);
     }
 
-    initialize();
-    advance();
-
-    function addElement(elem,price, time, id)
-    {
+    function addElement(elem,price, time, id) {
         $("#noticontainer").prepend(" <div id=\"notipanel"+ id +"\" class=\"one-day-notif panel panel-default\"><div class=\"panel-body\"></div></div>");
         $("#notipanel"+id + " .panel-body").html('&#128184; ' +  elem + '<div style="float:right;">€'+ price +'</div>');
         $("#notipanel"+id).delay(2000).fadeOut(300);
     }
+
+    initialize();
+    advance();
+
 </script>
 
-<?php } ?>
+<?php else : ?>
+
+    <div class="col-sm-8">
+        <div class="panel-box white" style="max-width: 100%;height: 780px;">
+            <span class="glyphicon glyphicon-remove-sign" style="font-size: 600px;opacity: 0.15;top: 50%;left: 50%;transform: translate(-50%, -50%);"></span>
+        </div>
+    </div>
+</div>
+
+<?php endif ?>

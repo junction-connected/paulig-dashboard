@@ -3,6 +3,12 @@ body {
 	font-family: "IBM Plex Sans", sans-serif;
 }
 
+.btn-primary {
+	color: #fff;
+	background-color: rgba(132,164,65,0.85) !important;
+	border-color: rgba(132,164,65, 1) !important;
+}
+
 .panel-box {
 	padding: 20px 25px;
 	margin: 15px 0;

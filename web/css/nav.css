@@ -1,7 +1,7 @@
 #logo {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    max-width: 150px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    max-width: 190px;
     height: auto;
 }
 
@@ -11,9 +11,26 @@
 }
 
 .sidebar {
-    background-color: #37474f;
+    background-color: #84a441;
     min-height: 100vh;
-    min-width: 270px;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.sidebar li {
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.sidebar li.pl-3:hover {
+    background: rgba(0,0,0,0.2) !important;
+}
+
+.sidebar li a:hover {
+    background: transparent;
+    color: #fff;
 }
 
 .icon {
@@ -22,6 +39,8 @@
 
 #main-content-wrapper{
     padding: 40px;
+    width: 100vw;
+    max-width: 100%;
 }
 
 .flex-container{
@@ -30,4 +49,28 @@
 
 .href-link{
     color: #ffffff;
+    text-align: center;
+}
+
+.href-link img {
+    width: 60px;
+    margin-top: 15px;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.sidebar li.pl-3 .href-link img:hover {
+    width: 70px;
+}
+
+.href-link p {
+    font-size: 30px;
+	margin-top: 5px;
+}
+
+hr.separator {
+	border: 1px solid rgba(255,255,255,0.34);
+	margin: 0 20px;
 }
