@@ -94,7 +94,7 @@ body {
 }
 
 .row hr.separator {
-	border: 1px solid rgba(0,0,0,0.34);
+	border: 1px solid #84a441;
 	margin: 0 15px 10px;
 }
 
