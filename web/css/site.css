@@ -43,7 +43,7 @@ body {
 	margin-bottom: 25px;
 }
 
-.panel-box h1::before {
+.panel-box h1::before, h1.highlight::before{
 	content: '';
 	width: 10px;
 	height: 27px;
