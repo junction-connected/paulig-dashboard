@@ -56,7 +56,18 @@ $this->title = 'Flashback';
                     <h3 class="panel-title">Info</h3>
                 </div>
                 <div class="panel-body">
-                    <p>Lorem ipsum dolor sit amet, illum decore mnesarchum cu eum, te justo electram eos, comprehensam delicatissimi cu ius. Eos ancillae deleniti officiis id. Ius et sapientem appellantur, ei vel augue contentiones. Duo mundi prompta minimum ex, ne vix convenire laboramus. Eum repudiare adversarium signiferumque ea, cu lorem assum vocent sed, id lorem delicata hendrerit vim.</p>
+                    <p>
+                        Hey!
+                    </p>
+                    <p>
+                        Ever wanted to go back in time?
+                    </p>
+                    <p>
+                        Well, here is the chance! Review a day of your business! We offer you the experience of seeing every purchase made, registered on your POS system. We will also provide a visual data representation about business fluctuations during the day, from opening to closing hours.
+                    </p>
+                    <p>
+                        Straight ahead! Pick a date above, and travel back in time! &#x1f60e;
+                    </p>
                 </div>
             </div>
             <?php if (isset($avgOrderAmountByWeekdayFiveMinutes)) : ?>
@@ -244,8 +255,10 @@ $this->title = 'Flashback';
 <?php else : ?>
 
     <div class="col-sm-8">
-        <div class="panel-box white" style="max-width: 100%;height: 780px;">
-            <span class="glyphicon glyphicon-remove-sign" style="font-size: 600px;opacity: 0.15;top: 50%;left: 50%;transform: translate(-50%, -50%);"></span>
+        <div class="panel-box white" style="max-width: 100%;height: 780px; position:relative;">
+            <?= Html::img('@web/images/placeholder-graph.png', [
+                    "style" => "width: 600px;top: 50%;left: 50%;transform: translate(-50%, -50%); position:absolute"
+            ]) ?>
         </div>
     </div>
 </div>
