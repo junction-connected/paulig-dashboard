@@ -35,6 +35,7 @@ $this->title = 'Amazing Business';
             </div>
         </div>
     </div>
+    <hr class="separator"></hr>
     <div class="col-sm-12">
         <div class="panel-box white">
             <h1>Order count per day</h1>

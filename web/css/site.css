@@ -11,7 +11,7 @@ body {
 
 .panel-box {
 	padding: 20px 25px;
-	margin: 15px 0;
+	margin: 15px 0 25px;
 	border: 1px solid #cfd8dc;
 	border-radius: 15px 2px;
 	-webkit-transition: all 1s ease;
@@ -41,6 +41,10 @@ body {
 
 .panel-box h1 {
 	margin-bottom: 25px;
+}
+
+.row>h1.highlight::before {
+	margin-left: 15px;
 }
 
 .panel-box h1::before, h1.highlight::before{
@@ -87,6 +91,11 @@ body {
 	animation-name: fadeIn;
 	animation-duration: .3s;
 	opacity: 1;
+}
+
+.row hr.separator {
+	border: 1px solid rgba(0,0,0,0.34);
+	margin: 0 15px 10px;
 }
 
 @keyframes fadeIn {
