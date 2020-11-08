@@ -176,7 +176,6 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
         animateValue(document.getElementById("revenue_counter"), revenueAmount, fiveMinOrderData[currentFiveMinOrderData]["orderAmount"], 300);
         while (currentDate - orderData[currentOrderData]["order_time"] > 0) {
             revenueAmount += Number(orderData[currentOrderData]["price"]);
-
             if(orderData[currentOrderData]["id"] !== 1){
                 addElement(orderData[currentOrderData]["name"], orderData[currentOrderData]["price"], Date(currentDate - orderData[currentOrderData]["order_time"]).toString(), orderData[currentOrderData]["id"]);
             }
@@ -196,17 +195,10 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
 
     function addElement(elem,price, time, id)
     {
-        $("#noticontainer").prepend(" <div id=\"notipanel"+ id +"\" class=\"panel panel-default\"><div class=\"panel-body\"></div></div>");
+        $("#noticontainer").prepend(" <div id=\"notipanel"+ id +"\" class=\"one-day-notif panel panel-default\"><div class=\"panel-body\"></div></div>");
         $("#notipanel"+id + " .panel-body").html('&#128184; ' +  elem + '<div style="float:right;">€'+ price +'</div>');
         $("#notipanel"+id).delay(2000).fadeOut(300);
-
-
     }
-
-    //let timer = setInterval(addElement,300);
-    /*setTimeout(function(){
-        clearInterval(timer);
-    }, 14000);*/
 </script>
 
 <?php } ?>

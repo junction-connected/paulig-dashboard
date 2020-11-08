@@ -3,6 +3,8 @@ class oneDay {
 
     static postDate() {
         let selectedDate = $('#one-day-date').val();
-        $.post(rootPath + '/one-day/index', {"orderTime": selectedDate});
+        $('<form action="' + rootPath + '/one-day/index' + '" method="POST">' +
+            '<input type="hidden" name="orderTime" value="' + selectedDate + '">' +
+            '</form>').appendTo($(document.body)).submit();
     }
 }

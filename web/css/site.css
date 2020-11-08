@@ -74,3 +74,24 @@ body {
 .panel-box:hover {
 	box-shadow: 0 0 15px rgba(36,36,36,0.89);
 }
+
+.one-day-notif {
+	margin-left: 0;
+	margin-right: 0;
+	animation-name: fadeIn;
+	animation-duration: .3s;
+	opacity: 1;
+}
+
+@keyframes fadeIn {
+	from {
+		margin-left: 50px;
+		margin-right: -50px;
+		opacity: 0;
+	}
+	to {
+		margin-left: 0;
+		margin-right: 0;
+		opacity: 1;
+	}
+}
