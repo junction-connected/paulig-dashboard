@@ -196,8 +196,8 @@ if (isset($avgOrderAmountByWeekdayFiveMinutes)) {
 
     function addElement(elem,price, time, id)
     {
-        $("#noticontainer").prepend(" <div id=\"notipanel"+ id +"\" class=\"panel panel-default\"><div class=\"panel-body\"></div></div>");
-        $("#notipanel"+id + " .panel-body").html('&#128184; ' +  elem + '<div style="float:right;">€'+ price +'</div>');
+        $("#noticontainer").prepend(" <div id=\"notipanel"+ id +"\" class=\"panel panel-default\"><div class=\"panel-body\"></div></div>")
+        $("#notipanel"+id + " .panel-body").html('&#128184; ' +  elem + '<div style="float:right;">€'+ price +'</div>')
         $("#notipanel"+id).delay(2000).fadeOut(300);
 
 
