@@ -9,10 +9,10 @@ use app\models\OrderItemByDate;
 use app\models\DatePickForm;
 
 /**
- * Class OneDayController
+ * Class FlashBackController
  * @package app\controllers
  */
-class OneDayController extends BaseController {
+class FlashBackController extends BaseController {
     /**
      * @return string
      */

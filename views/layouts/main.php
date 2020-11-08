@@ -24,37 +24,29 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
   <!-- nav-sidebar -->
     <div class="flex-container">
-      <div id="wrapper" class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar border-right" id="sidebar-wrapper">
-            <li class="logo-container">
-                <?= Html::img('@web/images/logo-woman.svg', [
-                        "id"=>"logo"
-                ]) ?>
-            </li>
-            <li class="pl-3">
-              <a class="href-link" href="<?= Yii::$app->urlManager->createUrl(['site/index']) ?>" id="dashboard-link">
-                  <?= Html::img('@web/images/clipboard-data.svg') ?>
-                  Dashboard
-              </a>
-            </li>
-            <li class="pl-3" id="customer-profile">
-              <a class="href-link" href="<?= Yii::$app->urlManager->createUrl(['customer-profile/index']) ?>" class="text-danger" >
-                  <?= Html::img('@web/images/file-person.svg') ?> Customer Profile
-              </a>
-            </li>
-            <li class ="pl-3">
-              <a class="href-link" href="<?= Yii::$app->urlManager->createUrl(['campaigns/index']) ?>" class="py-1 text-light">
-                  <?= Html::img('@web/images/default.svg') ?> Campaigns
-              </a>
-            </li>
-            <li class="pl-3">
-              <a class="href-link" href="<?= Yii::$app->urlManager->createUrl(['one-day/index']) ?>" class="py-1 text-light">
-                  <?= Html::img('@web/images/default.svg') ?> One day
-              </a>
-            </li>
-          </ul>
+        <div id="wrapper" class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar border-right" id="sidebar-wrapper">
+                <li class="logo-container">
+                    <?= Html::img('https://www.pauliggroup.com/sites/default/themes/pauliggroup/logo.svg', [
+                        "id" => "logo"
+                    ]) ?>
+                </li>
+                <li class="pl-3">
+                    <a class="href-link" href="<?= Yii::$app->urlManager->createUrl(['site/index']) ?>" id="dashboard-link">
+                        <?= Html::img('@web/images/clipboard-data.svg') ?>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <hr class="separator">
+                <li class="pl-3">
+                    <a class="href-link" href="<?= Yii::$app->urlManager->createUrl(['flash-back/index']) ?>" class="py-1 text-light">
+                        <?= Html::img('@web/images/default.svg') ?>
+                        <p>Flashback</p>
+                    </a>
+                </li>
+            </ul>
         </div>
-      <!-- endof nav-sidebar -->
+        <!-- endof nav-sidebar -->
         <div id="main-content-wrapper">
             <?= $content ?>
         </div>

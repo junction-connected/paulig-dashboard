@@ -40,7 +40,6 @@ $this->title = 'Amazing Business';
     </div>
 </div>
 
-
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -48,7 +47,6 @@ $this->title = 'Amazing Business';
 
     function generateLabels(){
         let labels = [];
-        //48
         for(let i=5; i<21; i++) {
             //egész
             if(i<=9){
@@ -71,30 +69,6 @@ $this->title = 'Amazing Business';
         }
         return labels;
     }
-/*
-    function generateDailyData(values) {
-        let labels =[];
-        let monday_data = [];
-        let tuesday_data = [];
-        //console.log(values.length);
-        for (let i = 0; i < values.length; i++) {
-            if (values[i].orderWeekDay === '0') {
-                labels.push(values[i].orderTime);
-                monday_data.push(values[i].orderAmount)
-            }
-            if (values[i].orderWeekDay === '1') {
-                tuesday_data.push(values[i].orderAmount)
-            }
-        }
-        //console.log(monday_data);
-        let mon = {data: monday_data};
-        let tue = {data: tuesday_data};
-        //console.log(mon);
-        //console.log(tue);
-        let return_value = {labels: labels, mon: mon, tue: tue};
-        //console.log(return_value);
-        return return_value;
-    }*/
 
     function getLabelToDay(labels, values, day){
         let arr = labels.map((label) =>{
@@ -115,9 +89,8 @@ $this->title = 'Amazing Business';
         return arr;
     }
 
-    function generateDailyData(values){
+    function generateDailyData(values) {
         let labels = generateLabels();
-        console.log(labels);
         let monday_data = getLabelToDay(labels, values, '1');
         let tuesday_data = getLabelToDay(labels, values, '2');
         let wednesday_data = getLabelToDay(labels, values, '3');
@@ -149,31 +122,8 @@ $this->title = 'Amazing Business';
         return(return_value);
     }
 
-/*
-"datasets":[
-{
-    "label":
-    "My First Dataset",
-    "data":[65,59,80,81,56,55,40],
-    "fill":false,
-    "borderColor":"rgb(75, 192, 192)",
-    "lineTension":0.1
-}]}
-        {
-            label: 'Business of Week Days',
-                data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1,
-            yAxisID: 'day'
-        }
-
-*/
-
-
-
-
-    console.log(values);
     let dailyData = generateDailyData(values);
-//    console.log(y_labels);
+
     new Chart(document.getElementById("myChart"), {
         type: 'line',
         data: {
